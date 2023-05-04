@@ -1,3 +1,62 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "quotes": ["error", "single", "avoid-escape"],
+    "import/extensions": "off",
+    "max-classes-per-file": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 130
+      }
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["error", "info", "warn"]
+      }
+    ],
+    "no-underscore-dangle": "off",
+    "no-shadow": "off",
+    "lines-between-class-members": "off",
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      // @xxx load tsconfig.json to eslint...
+      // thx https://github.com/benmosher/eslint-plugin-import/issues/1485#issuecomment-535351922 🙏
+      "typescript": {}
+    }
+  }
 }
