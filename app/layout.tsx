@@ -1,4 +1,7 @@
-import '@styles/globals.css';
+import Header from '@/core/components/Header';
+import SupabaseProvider from '@/auth/provider/supabase-provider';
+
+import '@/styles/globals.css';
 
 export const metadata = {
   title: 'Boniche Gang',
@@ -12,8 +15,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <main className="p-4 md:p-10 mx-auto max-w-7xl">{children}</main>
+      <body
+        className="flex flex-col min-h-screen bg-slate-50"
+        suppressHydrationWarning={true}
+      >
+        <Header />
+        <SupabaseProvider>
+          <main className="flex flex-col p-4 md:p-10 flex-grow">
+            {children}
+          </main>
+        </SupabaseProvider>
       </body>
     </html>
   );

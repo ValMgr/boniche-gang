@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@tremor/react';
 import { useEffect } from 'react';
+import { Button } from '@tremor/react';
 
 export default function GlobalError({
   error,
