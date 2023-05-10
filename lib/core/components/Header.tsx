@@ -1,12 +1,12 @@
-import React from 'react';
+import { cookies, headers } from 'next/headers';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { headers, cookies } from 'next/headers';
 
+import Link from '@/core/components/Link';
+import logo from '@/assets/boniche-gang-logo.png';
 import { Database } from '@/types/database.types';
 import Logout from '@/auth/components/Logout';
 import Button from '@/core/components/Button';
-import logo from '@/assets/boniche-gang-logo.png';
-import Link from './Link';
+import AvatarPreview from '@/auth/components/AvatarPreview';
 
 export default async function Header() {
   const supabase = createServerComponentSupabaseClient<Database>({
@@ -14,7 +14,7 @@ export default async function Header() {
     cookies
   });
 
-  const session = (await supabase.auth.getSession()).data.session;
+  const user = (await supabase.auth.getSession()).data.session?.user;
 
   const links = [
     {
@@ -33,21 +33,23 @@ export default async function Header() {
       condition: true
     },
     {
-      href: '/servers',
+      href: '/dashboard/servers',
       label: 'Servers',
       condition:
-        session?.user && session?.user.role?.toLowerCase() === 'members'
+        (user && user.role?.toLowerCase() === 'members') ||
+        user?.role?.toLowerCase() === 'admin'
     },
     {
-      href: '/products',
+      href: '/dashboard/products',
       label: 'Products',
       condition:
-        session?.user && session?.user.role?.toLowerCase() === 'members'
+        (user && user.role?.toLowerCase() === 'members') ||
+        user?.role?.toLowerCase() === 'admin'
     },
     {
-      href: '/users',
-      label: 'Profile',
-      condition: session?.user && session?.user.role?.toLowerCase() === 'admin'
+      href: '/dashboard/users',
+      label: 'Users',
+      condition: user && user.role?.toLowerCase() === 'admin'
     }
   ];
 
@@ -71,19 +73,26 @@ export default async function Header() {
         </nav>
       </div>
       <div className="flex space-x-4 items-center">
-        <Link href="/report" icon='bug_report'>Report a bug</Link>
-        {session?.user ? (
-          <li>
-            <Logout />
-          </li>
-        ) : (
-          <>
-            <Button href="/login">Sign in</Button>
-            <Button style="secondary" href="/register">
-              Register
-            </Button>
-          </>
-        )}
+        <Link href="/report" icon="bug_report">
+          Report a bug
+        </Link>
+
+        <>
+          {user ? (
+            <>
+              {/* @ts-expect-error Async Server Component */}
+              <AvatarPreview />
+              <Logout />
+            </>
+          ) : (
+            <>
+              <Button href="/login">Sign in</Button>
+              <Button style="secondary" href="/register">
+                Register
+              </Button>
+            </>
+          )}
+        </>
       </div>
     </header>
   );

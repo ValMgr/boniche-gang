@@ -1,6 +1,6 @@
 'use client';
 
-import Link from './Link';
+import Link from '@/core/components/Link';
 
 interface ButtonProps {
   style?: 'primary' | 'secondary' | 'link';

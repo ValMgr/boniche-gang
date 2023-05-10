@@ -1,4 +1,4 @@
-import SupabaseProvider from '@/auth/provider/supabase-provider';
+import SupabaseProvider from '@/auth/provider/supabaseProvider';
 import Header from '@/core/components/Header';
 
 import 'material-icons/iconfont/filled.css';
