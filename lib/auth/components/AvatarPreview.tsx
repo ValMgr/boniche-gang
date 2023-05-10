@@ -17,14 +17,13 @@ export default async function AvatarPreview() {
     .eq('id', user_id)
     .single();
 
-  console.log('profile: ', profile);
-
   if (error || !profile) {
     console.error(error);
     return;
   }
 
   return (
+    <a href="/profile">
     <div className="flex items-center gap-4">
       {profile.avatar_url ? (
         <img
@@ -49,5 +48,6 @@ export default async function AvatarPreview() {
         </div>
       )}
     </div>
+    </a>
   );
 }

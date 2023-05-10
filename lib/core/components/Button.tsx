@@ -31,7 +31,7 @@ export default function Button({
       return (
         <a
           href={href}
-          className="bg-transparent border border-zinc-900 hover:border-zinc-700 text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
+          className="bg-transparent border border-zinc-900 hover:border-zinc-700 disabled:opacity-20 disabled:hover:border-zinc-900 disabled:cursor-not-allowed text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
         >
           {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
           {children}
@@ -44,7 +44,7 @@ export default function Button({
         type={type}
         disabled={disabled}
         onClick={onClick}
-        className="bg-transparent border border-zinc-900 hover:border-zinc-700 text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
+        className="bg-transparent border border-zinc-900 hover:border-zinc-700 disabled:opacity-20 disabled:hover:border-zinc-900 disabled:cursor-not-allowed text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
       >
         {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
 
@@ -66,7 +66,7 @@ export default function Button({
       <button
         disabled={disabled}
         onClick={onClick}
-        className="text-zinc-900 background-transparent hover:text-zinc-700 transition-colors duration-300 flex items-center"
+        className="text-zinc-900 background-transparent hover:text-zinc-700 disabled:cursor-not-allowed transition-colors duration-300 flex items-center"
       >
         {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
         {children}
@@ -79,7 +79,7 @@ export default function Button({
       return (
         <a
           href={href}
-          className="bg-zinc-900 hover:bg-zinc-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
+          className="bg-zinc-900 hover:bg-zinc-700 disabled:opacity-20 disabled:hover:bg-zinc-900 disabled:cursor-not-allowed text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
         >
           {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
           {children}
@@ -92,7 +92,7 @@ export default function Button({
     <button
       disabled={disabled}
       onClick={onClick}
-      className="bg-zinc-900 hover:bg-zinc-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
+      className="bg-zinc-900 hover:bg-zinc-700 disabled:opacity-20 disabled:hover:bg-zinc-900 disabled:cursor-not-allowed text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
     >
       {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
       {children}

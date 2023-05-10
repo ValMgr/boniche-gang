@@ -24,7 +24,7 @@ export default async function RootLayout({
         <SupabaseProvider>
           {/* @ts-expect-error Async Server Component */}
           <Header />
-          <main className="flex flex-col p-4 md:p-10 flex-grow">
+          <main className="flex flex-col px-4 py-4 md:px-10 flex-grow">
             {children}
           </main>
         </SupabaseProvider>
