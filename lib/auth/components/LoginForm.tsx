@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useSupabase } from '@/auth/provider/supabase-provider';
+import Button from '@/core/components/Button';
+import Link from '@/core/components/Link';
 
 export default function LoginForm() {
   const { supabase } = useSupabase();
@@ -69,21 +71,13 @@ export default function LoginForm() {
           maxLength={64}
           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$"
           placeholder="******************"
-        />  
+        />
       </div>
       <div className="flex items-center justify-between">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Login in
-        </button>
-        <a
-          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-          href="/register"
-        >
-          Create an account?
-        </a>
+        <Button style="primary" type="submit">
+          Sign In
+        </Button>
+        <Link href="/register">Create an account?</Link>
       </div>
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">

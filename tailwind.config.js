@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
-    './lib/**/*.{ts,tsx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
     './node_modules/@tremor/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
