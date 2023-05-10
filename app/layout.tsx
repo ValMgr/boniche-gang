@@ -1,4 +1,4 @@
-import SupabaseProvider from '@/auth/provider/supabaseProvider';
+import SupabaseProvider from '@/auth/provider/SupabaseProvider';
 import Header from '@/core/components/Header';
 
 import 'material-icons/iconfont/filled.css';
@@ -24,7 +24,7 @@ export default async function RootLayout({
         <SupabaseProvider>
           {/* @ts-expect-error Async Server Component */}
           <Header />
-          <main className="flex flex-col px-4 py-4 md:px-10 flex-grow">
+          <main className="flex flex-col px-4 pb-12 md:px-10 flex-grow">
             {children}
           </main>
         </SupabaseProvider>

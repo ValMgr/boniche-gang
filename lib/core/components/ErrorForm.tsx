@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useSupabase } from '@/auth/provider/supabaseProvider';
+import { useSupabase } from '@/auth/provider/SupabaseProvider';
 import Button from '@/core/components/Button';
 
 export default function ErrorForm() {
@@ -37,7 +37,11 @@ export default function ErrorForm() {
   };
 
   return (
-    <form className="flex flex-col gap-4 bg-white p-4 mt-8 shadow-lg rounded-lg" method="POST" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-4 bg-white p-4 mt-8 shadow-lg rounded-lg"
+      method="POST"
+      onSubmit={handleSubmit}
+    >
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -131,6 +135,5 @@ export default function ErrorForm() {
         </div>
       )}
     </form>
-
   );
 }

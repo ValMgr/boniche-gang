@@ -4,7 +4,7 @@ import React from 'react';
 import { revalidatePath } from 'next/cache';
 
 import Button from '@/core/components/Button';
-import { useSupabase } from '@/auth/provider/supabaseProvider';
+import { useSupabase } from '@/auth/provider/SupabaseProvider';
 
 export default function Logout() {
   const { supabase } = useSupabase();

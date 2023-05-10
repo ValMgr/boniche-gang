@@ -1,10 +1,9 @@
-import React from 'react';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { cookies, headers } from 'next/headers';
 
 import { Database } from '@/types/database.types';
 
-export default async function AvatarPreview() {
+export default async function Avatar() {
   const supabase = createServerComponentSupabaseClient<Database>({
     headers,
     cookies
@@ -23,18 +22,17 @@ export default async function AvatarPreview() {
   }
 
   return (
-    <a href="/profile">
-    <div className="flex items-center gap-4">
+    <div className="absolute" style={{ transform: 'translate(-100%, -50%)' }}>
       {profile.avatar_url ? (
         <img
-          src={profile.avatar_url}
-          alt="Avatar"
-          className="w-8 h-8 rounded-full"
+          className="w-40 h-40 p-1 rounded-full ring-8 ring-inset ring-white"
+          src={profile?.avatar_url}
+          alt="Bordered avatar"
         />
       ) : (
-        <div className="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full">
+        <div className="relative w-40 h-40 overflow-hidden bg-gray-200 rounded-full ring-8 ring-white">
           <svg
-            className="absolute w-10 h-10 text-gray-400 -left-1"
+            className="absolute w-40 h-40 -bottom-4 text-gray-400"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +46,5 @@ export default async function AvatarPreview() {
         </div>
       )}
     </div>
-    </a>
   );
 }
