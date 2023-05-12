@@ -8,6 +8,8 @@ import Logout from '@/auth/components/Logout';
 import Button from '@/core/components/Button';
 import AvatarPreview from '@/auth/components/AvatarPreview';
 
+const revalidate = 0;
+
 export default async function Header() {
   const supabase = createServerComponentSupabaseClient<Database>({
     headers,
@@ -56,7 +58,7 @@ export default async function Header() {
   return (
     <header className="flex items-center justify-between p-4 md:p-10 w-screen">
       <div className="flex items-center gap-4">
-        <img src={logo.src} alt="Boniche Gang Logo" className="w-14 h-14" />
+        <img src={logo.src} alt="Boniche Gang Logo" className="w-14 h-14" height={56} width={56} />
         <h1 className="text-2xl font-bold">Boniche Gang</h1>
         <nav className="ml-5">
           <ul className="flex space-x-4">

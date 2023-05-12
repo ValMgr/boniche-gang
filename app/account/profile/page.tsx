@@ -16,11 +16,15 @@ export default function Profile() {
           <Avatar />
           <div className="flex flex-col items-start justify-center ml-10">
             <h2 className="text-2xl">Profile</h2>
-            <p className="text-sm text-gray-500">Update your profile details</p>
+            <p className="text-sm text-gray-500">
+              Update your photo and personal details.
+            </p>
           </div>
         </div>
 
-        <Button style="secondary">Save</Button>
+        <Button style="secondary" type="submit" form="profile-form">
+          Save
+        </Button>
       </div>
 
       <ProfileForm />

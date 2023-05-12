@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   href?: string;
+  form?: string;
   icon?: string;
   iconType?: 'filled' | 'outlined';
 }
@@ -20,6 +21,7 @@ export default function Button({
   disabled,
   type = 'button',
   href,
+  form,
   icon,
   iconType = 'filled'
 }: ButtonProps) {
@@ -44,6 +46,7 @@ export default function Button({
         type={type}
         disabled={disabled}
         onClick={onClick}
+        form={form}
         className="bg-transparent border border-zinc-900 hover:border-zinc-700 disabled:opacity-20 disabled:hover:border-zinc-900 disabled:cursor-not-allowed text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
       >
         {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
@@ -66,7 +69,8 @@ export default function Button({
       <button
         disabled={disabled}
         onClick={onClick}
-        className="text-zinc-900 background-transparent hover:text-zinc-700 disabled:cursor-not-allowed transition-colors duration-300 flex items-center"
+        form={form}
+        className="text-zinc-900 background-transparent hover:text-zinc-700 disabled:cursor-not-allowed transition-colors duration-300 flex items-center disabled:opacity-50"
       >
         {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
         {children}
@@ -92,6 +96,7 @@ export default function Button({
     <button
       disabled={disabled}
       onClick={onClick}
+      form={form}
       className="bg-zinc-900 hover:bg-zinc-700 disabled:opacity-20 disabled:hover:bg-zinc-900 disabled:cursor-not-allowed text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
     >
       {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}

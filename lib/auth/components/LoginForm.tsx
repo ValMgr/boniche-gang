@@ -26,7 +26,7 @@ export default function LoginForm() {
       return;
     }
 
-    window.location.href = '/profile';
+    window.location.href = '/account/profile';
   };
 
   return (

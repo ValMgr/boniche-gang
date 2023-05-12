@@ -12,7 +12,7 @@ export default async function Avatar() {
   const user_id = (await supabase.auth.getSession()).data.session?.user?.id;
   const { data: profile, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('avatar_url')
     .eq('id', user_id)
     .single();
 

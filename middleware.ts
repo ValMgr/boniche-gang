@@ -7,15 +7,6 @@ import type { Database } from '@/types/database.types';
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareSupabaseClient<Database>({ req, res });
-  const session = await supabase.auth.getSession();
-
-  if (
-    !session.data.session?.user &&
-    (req.nextUrl.pathname.startsWith('/profile') ||
-      req.nextUrl.pathname.startsWith('/dashboard'))
-  ) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl));
-  }
-
+  await supabase.auth.getSession();
   return res;
 }

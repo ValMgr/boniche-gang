@@ -11,9 +11,14 @@ export default async function AvatarPreview() {
   });
 
   const user_id = (await supabase.auth.getSession()).data.session?.user?.id;
+
+  if (!user_id) {
+    return;
+  }
+
   const { data: profile, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('avatar_url')
     .eq('id', user_id)
     .single();
 
@@ -23,31 +28,31 @@ export default async function AvatarPreview() {
   }
 
   return (
-    <a href="/profile">
-    <div className="flex items-center gap-4">
-      {profile.avatar_url ? (
-        <img
-          src={profile.avatar_url}
-          alt="Avatar"
-          className="w-8 h-8 rounded-full"
-        />
-      ) : (
-        <div className="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full">
-          <svg
-            className="absolute w-10 h-10 text-gray-400 -left-1"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </div>
-      )}
-    </div>
+    <a href="/account/profile">
+      <div className="flex items-center gap-4">
+        {profile.avatar_url ? (
+          <img
+            src={profile.avatar_url}
+            alt="Avatar"
+            className="w-8 h-8 rounded-full"
+          />
+        ) : (
+          <div className="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full">
+            <svg
+              className="absolute w-10 h-10 text-gray-400 -left-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </div>
+        )}
+      </div>
     </a>
   );
 }
