@@ -30,28 +30,21 @@ export default async function Header() {
       condition: true
     },
     {
-      href: '/marketplace',
-      label: 'Marketplace',
+      href: '/events',
+      label: 'Events',
       condition: true
     },
     {
-      href: '/dashboard/servers',
-      label: 'Servers',
+      href: '/shop',
+      label: 'Shop',
+      condition: true
+    },
+    {
+      href: '/dashboard/overview',
+      label: 'Dashboard',
       condition:
         (user && user.role?.toLowerCase() === 'members') ||
         user?.role?.toLowerCase() === 'admin'
-    },
-    {
-      href: '/dashboard/products',
-      label: 'Products',
-      condition:
-        (user && user.role?.toLowerCase() === 'members') ||
-        user?.role?.toLowerCase() === 'admin'
-    },
-    {
-      href: '/dashboard/users',
-      label: 'Users',
-      condition: user && user.role?.toLowerCase() === 'admin'
     }
   ];
 

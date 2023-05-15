@@ -54,8 +54,8 @@ export default async function Users() {
         <TableBody>
           {profiles.map((profile) => (
             <TableRow key={profile.id}>
-              <TableCell>{profile.username}</TableCell>
-              <TableCell>{profile.full_name}</TableCell>
+              <TableCell>{profile.username || '-'}</TableCell>
+              <TableCell>{profile.full_name || '-'}</TableCell>
               <TableCell>{(profile.user as User).email}</TableCell>
               <TableCell>{(profile.user as User).role}</TableCell>
               <TableCell>

@@ -23,11 +23,9 @@ export default async function MembersPage() {
     );
   }
 
-  const members = profiles.filter(
-    (profile) => (profile.user as { role: string }).role !== 'authenticated'
-  );
+  const members = profiles.filter((profile) => (profile.user as { role: string}).role !== 'authenticated');
 
-  if (!members) {
+  if (!profiles) {
     return <div>No members found</div>;
   }
 
