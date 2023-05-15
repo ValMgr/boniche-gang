@@ -92,7 +92,35 @@ export interface Database {
       };
     };
     Views: {
-      [_ in never]: never;
+      users: {
+        Row: {
+          created_at: string | null;
+          email: string | null;
+          id: string | null;
+          last_sign_in_at: string | null;
+          phone: string | null;
+          role: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          email?: string | null;
+          id?: string | null;
+          last_sign_in_at?: string | null;
+          phone?: string | null;
+          role?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          email?: string | null;
+          id?: string | null;
+          last_sign_in_at?: string | null;
+          phone?: string | null;
+          role?: string | null;
+          updated_at?: string | null;
+        };
+      };
     };
     Functions: {
       [_ in never]: never;
