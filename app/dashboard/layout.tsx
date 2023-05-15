@@ -42,6 +42,11 @@ export default async function DashboardLayout({ children }: Props) {
       href: '/dashboard/servers',
       label: 'Servers',
       condition: true
+    },
+    {
+      href: '/dashboard/issues',
+      label: 'Issues',
+      condition: session?.user.role === 'admin'
     }
   ];
 
