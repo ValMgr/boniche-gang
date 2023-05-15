@@ -1,7 +1,6 @@
 import { BsArrowDown, BsDiscord } from 'react-icons/bs';
 
 import Button from '@/core/components/Button';
-import BnchPMC from '@/assets/boniche-pmc.png';
 
 import '@/styles/homepage.css';
 import { Card } from '@tremor/react';
@@ -29,7 +28,7 @@ export default async function IndexPage() {
         </div>
         <div className="flex flex-col w-1/2 relative">
           <img
-            src={BnchPMC.src}
+            src="/boniche-pmc.png"
             className="splash rounded-lg shadow-lg m-auto"
           />
         </div>

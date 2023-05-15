@@ -3,7 +3,6 @@ import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-next
 import { FaBug } from 'react-icons/fa';
 
 import Link from '@/core/components/Link';
-import logo from '@/assets/boniche-gang-logo.png';
 import { Database } from '@/types/database.types';
 import Logout from '@/auth/components/Logout';
 import Button from '@/core/components/Button';
@@ -59,7 +58,7 @@ export default async function Header() {
   return (
     <header className="flex items-center justify-between p-4 md:p-10 w-screen">
       <div className="flex items-center gap-4">
-        <img src={logo.src} alt="Boniche Gang Logo" className="w-14 h-14" height={56} width={56} />
+        <img src="/boniche-gang-logo.png" alt="Boniche Gang Logo" className="w-14 h-14" height={56} width={56} />
         <h1 className="text-2xl font-bold">Boniche Gang</h1>
         <nav className="ml-5">
           <ul className="flex space-x-4">
