@@ -12,24 +12,30 @@ export default async function MembersPage() {
 
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('*, country:countries(name)');
+    .select('*, country:countries(name), user:users(role)');
 
   if (error) {
     console.error(error);
     return (
-      <div className="text-red-500 background-red-100">{error.message}</div>
+      <div className="text-red-500 bg-red-100 p-4 rounded-lg">
+        {error.message}
+      </div>
     );
   }
 
-  if (!profiles) {
-    return <div>No users found</div>;
+  const members = profiles.filter(
+    (profile) => (profile.user as { role: string }).role !== 'authenticated'
+  );
+
+  if (!members) {
+    return <div>No members found</div>;
   }
 
   return (
     <div className="flex flex-col">
       <h1 className="text-2xl font-bold">Members</h1>
       <Grid className="mt-4 gap-5" numCols={1} numColsMd={3} numColsLg={5}>
-        {profiles.map((profile) => (
+        {members.map((profile) => (
           <div
             key={profile.id}
             className="flex flex-col rounded-lg shadow border border-gray-200"

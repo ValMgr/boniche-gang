@@ -1,5 +1,8 @@
 import { headers, cookies } from 'next/headers';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import {
+  User,
+  createServerComponentSupabaseClient
+} from '@supabase/auth-helpers-nextjs';
 import {
   Table,
   TableHead,
@@ -18,30 +21,22 @@ export default async function Users() {
     cookies
   });
 
-  const { data: users, error: user_err } = await supabase
-    .from('users')
-    .select('*');
   const { data: profiles, error: profile_err } = await supabase
     .from('profiles')
-    .select('*');
+    .select('*, user:users(*)');
 
-  if (user_err || profile_err) {
-    console.error(user_err || profile_err);
+  if (profile_err) {
+    console.error(profile_err);
     return (
-      <div className="text-red-500 background-red-100">
+      <div className="text-red-500 bg-red-100 rounded-lg p-4">
         Error fetching users
       </div>
     );
   }
 
-  if (!users || !profiles) {
+  if (!profiles) {
     return <div>No users found</div>;
   }
-
-  const usersWithProfiles = users.map((user) => {
-    const profile = profiles?.find((profile) => profile.id === user.id);
-    return { ...user, ...profile };
-  });
 
   return (
     <Card>
@@ -54,19 +49,23 @@ export default async function Users() {
             <TableHeaderCell>Role</TableHeaderCell>
             <TableHeaderCell>Updated at</TableHeaderCell>
             <TableHeaderCell>Created at</TableHeaderCell>
-
           </TableRow>
         </TableHead>
         <TableBody>
-          {usersWithProfiles.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.username}</TableCell>
-              <TableCell>{user.full_name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>{new Date(user.updated_at as string).toDateString()}</TableCell>
-              <TableCell>{new Date(user.created_at as string).toDateString()}</TableCell>
-
+          {profiles.map((profile) => (
+            <TableRow key={profile.id}>
+              <TableCell>{profile.username}</TableCell>
+              <TableCell>{profile.full_name}</TableCell>
+              <TableCell>{(profile.user as User).email}</TableCell>
+              <TableCell>{(profile.user as User).role}</TableCell>
+              <TableCell>
+                {new Date(profile.updated_at as string).toDateString()}
+              </TableCell>
+              <TableCell>
+                {new Date(
+                  (profile.user as User).created_at as string
+                ).toDateString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
