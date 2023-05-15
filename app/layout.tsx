@@ -1,8 +1,6 @@
 import SupabaseProvider from '@/auth/provider/SupabaseProvider';
 import Header from '@/core/components/Header';
 
-import 'material-icons/iconfont/filled.css';
-import 'material-icons/iconfont/outlined.css';
 import '@/styles/globals.css';
 
 export const metadata = {

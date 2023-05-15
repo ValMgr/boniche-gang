@@ -10,8 +10,6 @@ interface ButtonProps {
   disabled?: boolean;
   href?: string;
   form?: string;
-  icon?: string;
-  iconType?: 'filled' | 'outlined';
 }
 
 export default function Button({
@@ -22,20 +20,18 @@ export default function Button({
   type = 'button',
   href,
   form,
-  icon,
-  iconType = 'filled'
 }: ButtonProps) {
-  const iconSlug =
-    iconType === 'filled' ? 'material-icons' : 'material-icons-outlined';
+
 
   if (style === 'secondary') {
     if (href) {
       return (
         <a
           href={href}
+          target={href.startsWith('http') ? '_blank' : '_self'}
           className="bg-transparent border border-zinc-900 hover:border-zinc-700 disabled:opacity-20 disabled:hover:border-zinc-900 disabled:cursor-not-allowed text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
         >
-          {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
+
           {children}
         </a>
       );
@@ -49,7 +45,7 @@ export default function Button({
         form={form}
         className="bg-transparent border border-zinc-900 hover:border-zinc-700 disabled:opacity-20 disabled:hover:border-zinc-900 disabled:cursor-not-allowed text-zinc-900 hover:text-zinc-700 py-2 px-4 rounded transition-colors duration-300 flex items-center"
       >
-        {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
+
 
         {children}
       </button>
@@ -59,7 +55,7 @@ export default function Button({
   if (style === 'link') {
     if (href) {
       return (
-        <Link href={href} icon={icon} iconType={iconType}>
+        <Link href={href}>
           {children}
         </Link>
       );
@@ -72,7 +68,7 @@ export default function Button({
         form={form}
         className="text-zinc-900 background-transparent hover:text-zinc-700 disabled:cursor-not-allowed transition-colors duration-300 flex items-center disabled:opacity-50"
       >
-        {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
+
         {children}
       </button>
     );
@@ -83,9 +79,10 @@ export default function Button({
       return (
         <a
           href={href}
+          target={href.startsWith('http') ? '_blank' : '_self'}
           className="bg-zinc-900 hover:bg-zinc-700 disabled:opacity-20 disabled:hover:bg-zinc-900 disabled:cursor-not-allowed text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
         >
-          {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
+
           {children}
         </a>
       );
@@ -99,7 +96,7 @@ export default function Button({
       form={form}
       className="bg-zinc-900 hover:bg-zinc-700 disabled:opacity-20 disabled:hover:bg-zinc-900 disabled:cursor-not-allowed text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center"
     >
-      {icon && <span className={`${iconSlug} mr-1`}>{icon}</span>}
+
       {children}
     </button>
   );

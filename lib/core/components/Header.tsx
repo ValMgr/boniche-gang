@@ -1,5 +1,6 @@
 import { cookies, headers } from 'next/headers';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { FaBug } from 'react-icons/fa';
 
 import Link from '@/core/components/Link';
 import logo from '@/assets/boniche-gang-logo.png';
@@ -75,7 +76,8 @@ export default async function Header() {
         </nav>
       </div>
       <div className="flex space-x-4 items-center">
-        <Link href="/report" icon="bug_report">
+        <Link href="/report">
+          <FaBug className='mr-2' />
           Report a bug
         </Link>
 
