@@ -1,5 +1,5 @@
-import React from 'react';
+import ComingSoon from '@/core/components/ComingSoon';
 
 export default async function Servers() {
-  return <div>Dashboard - Servers</div>;
+  return <ComingSoon />;
 }

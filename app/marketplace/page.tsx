@@ -1,7 +1,5 @@
-import React from 'react'
+import ComingSoon from '@/core/components/ComingSoon';
 
 export default function MarketPlace() {
-  return (
-    <div>MarketPlace</div>
-  )
+  return <ComingSoon />;
 }
