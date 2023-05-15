@@ -11,7 +11,7 @@ dependencies:
     specifier: 2.22.0
     version: 2.22.0(encoding@0.1.13)
   '@tremor/react':
-    specifier: ^2.6.1
+    specifier: 2.6.1
     version: 2.6.1(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
     specifier: 18.14.2
@@ -20,7 +20,7 @@ dependencies:
     specifier: ^18.2.6
     version: 18.2.6
   '@types/react-dom':
-    specifier: ^18.2.4
+    specifier: 18.2.4
     version: 18.2.4
   '@vercel/analytics':
     specifier: 0.1.11
@@ -47,10 +47,10 @@ dependencies:
     specifier: 15.8.1
     version: 15.8.1
   react:
-    specifier: ^18.2.0
+    specifier: 18.2.0
     version: 18.2.0
   react-dom:
-    specifier: ^18.2.0
+    specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   react-icons:
     specifier: 4.8.0
