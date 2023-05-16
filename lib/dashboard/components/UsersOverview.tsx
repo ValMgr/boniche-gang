@@ -1,6 +1,6 @@
 'use client';
 
-import { DonutChart, Title, Card } from '@tremor/react';
+import { DonutChart, Title, Card, Legend } from '@tremor/react';
 
 interface Props {
   roles: {
@@ -41,6 +41,11 @@ export default function UsersOverview({ roles }: Props) {
         index="label"
         category="value"
         showLabel={true}
+        colors={['amber', 'green', 'indigo']}
+        className='mb-4'
+      />
+      <Legend
+        categories={['Admin', 'Members', 'Guest']}
         colors={['amber', 'green', 'indigo']}
       />
     </Card>

@@ -35,6 +35,38 @@ export interface Database {
           name?: string | null;
         };
       };
+      events: {
+        Row: {
+          created_at: string | null;
+          description: string | null;
+          end_date: string | null;
+          id: number;
+          location: string | null;
+          name: string;
+          start_date: string;
+          thumbnail: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          description?: string | null;
+          end_date?: string | null;
+          id?: number;
+          location?: string | null;
+          name: string;
+          start_date: string;
+          thumbnail?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          description?: string | null;
+          end_date?: string | null;
+          id?: number;
+          location?: string | null;
+          name?: string;
+          start_date?: string;
+          thumbnail?: string | null;
+        };
+      };
       issues: {
         Row: {
           contact: string | null;
@@ -68,6 +100,7 @@ export interface Database {
           country: number | null;
           full_name: string | null;
           id: string;
+          role: string | null;
           updated_at: string | null;
           username: string | null;
         };
@@ -77,6 +110,7 @@ export interface Database {
           country?: number | null;
           full_name?: string | null;
           id: string;
+          role?: string | null;
           updated_at?: string | null;
           username?: string | null;
         };
@@ -86,6 +120,7 @@ export interface Database {
           country?: number | null;
           full_name?: string | null;
           id?: string;
+          role?: string | null;
           updated_at?: string | null;
           username?: string | null;
         };
@@ -166,6 +201,10 @@ export type InsertCountries =
   Database['public']['Tables']['countries']['Insert'];
 export type UpdateCountries =
   Database['public']['Tables']['countries']['Update'];
+
+export type Events = Database['public']['Tables']['events']['Row'];
+export type InsertEvents = Database['public']['Tables']['events']['Insert'];
+export type UpdateEvents = Database['public']['Tables']['events']['Update'];
 
 export type Issues = Database['public']['Tables']['issues']['Row'];
 export type InsertIssues = Database['public']['Tables']['issues']['Insert'];
