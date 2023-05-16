@@ -16,6 +16,12 @@ export default async function DashboardLayout({ children }: Props) {
   });
 
   const session = (await supabase.auth.getSession()).data.session;
+  const user_id = session?.user?.id;
+  const { data: permissions } = await supabase.from('roles').select('role').eq('id', user_id).single();
+
+  if (!session || !permissions) {
+    return <Login />;
+  }
 
   const links = [
     {
@@ -31,7 +37,7 @@ export default async function DashboardLayout({ children }: Props) {
     {
       href: '/dashboard/users',
       label: 'Users',
-      condition: session?.user.role === 'admin'
+      condition: permissions.role === 'admin'
     },
     {
       href: '/dashboard/events',
@@ -46,13 +52,10 @@ export default async function DashboardLayout({ children }: Props) {
     {
       href: '/dashboard/issues',
       label: 'Issues',
-      condition: session?.user.role === 'admin'
+      condition: permissions.role === 'admin'
     }
   ];
 
-  if (!session) {
-    return <Login />;
-  }
 
   return (
     <>

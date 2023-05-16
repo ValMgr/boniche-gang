@@ -90,6 +90,23 @@ export interface Database {
           username?: string | null;
         };
       };
+      roles: {
+        Row: {
+          id: string;
+          role: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id: string;
+          role?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          role?: string | null;
+          updated_at?: string | null;
+        };
+      };
     };
     Views: {
       users: {
@@ -157,3 +174,7 @@ export type UpdateIssues = Database['public']['Tables']['issues']['Update'];
 export type Profiles = Database['public']['Tables']['profiles']['Row'];
 export type InsertProfiles = Database['public']['Tables']['profiles']['Insert'];
 export type UpdateProfiles = Database['public']['Tables']['profiles']['Update'];
+
+export type Roles = Database['public']['Tables']['roles']['Row'];
+export type InsertRoles = Database['public']['Tables']['roles']['Insert'];
+export type UpdateRoles = Database['public']['Tables']['roles']['Update'];

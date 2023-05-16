@@ -12,7 +12,7 @@ export default async function MembersPage() {
 
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('*, country:countries(name), user:users(role)');
+    .select('*, country:countries(name), permissions:roles(role)');
 
   if (error) {
     console.error(error);
@@ -23,7 +23,9 @@ export default async function MembersPage() {
     );
   }
 
-  const members = profiles.filter((profile) => (profile.user as { role: string}).role !== 'authenticated');
+  const members = profiles.filter(
+    (profile) => (profile.permissions as { role: string }).role !== 'guest'
+  );
 
   if (!profiles) {
     return <div>No members found</div>;
@@ -43,7 +45,7 @@ export default async function MembersPage() {
             ) : (
               <div className="relative w-full flex-1 bg-gray-200 rounded-t-lg overflow-hidden">
                 <svg
-                  className="absolute w-26 h-26 text-gray-400 -left-2 top-5"
+                  className="absolute w-26 h-26 text-gray-400 -left-2 top-10"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,9 +60,11 @@ export default async function MembersPage() {
             )}
             <div className="flex flex-col p-5">
               <span className="font-bold">{profile.username}</span>
-              <span className="text-sm text-gray-500">
-                {(profile.country as { name: string }).name}
-              </span>
+              {profile.country && (
+                <span className="text-sm text-gray-500">
+                  {(profile.country as { name: string }).name}
+                </span>
+              )}
             </div>
           </div>
         ))}

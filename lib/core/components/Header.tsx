@@ -16,7 +16,18 @@ export default async function Header() {
     cookies
   });
 
-  const user = (await supabase.auth.getSession()).data.session?.user;
+  const user_id = (await supabase.auth.getUser()).data.user?.id;
+  if (!user_id) return null;
+
+  const { data: permissions, error } = await supabase
+    .from('roles')
+    .select('role')
+    .eq('id', user_id)
+    .single();
+
+  if (error) {
+    console.error(error);
+  }
 
   const links = [
     {
@@ -43,15 +54,21 @@ export default async function Header() {
       href: '/dashboard/overview',
       label: 'Dashboard',
       condition:
-        (user && user.role?.toLowerCase() === 'members') ||
-        user?.role?.toLowerCase() === 'admin'
+        (permissions && permissions.role?.toLowerCase() === 'members') ||
+        permissions?.role?.toLowerCase() === 'admin'
     }
   ];
 
   return (
     <header className="flex items-center justify-between p-4 md:p-10 w-screen">
       <div className="flex items-center gap-4">
-        <img src="/boniche-gang-logo.png" alt="Boniche Gang Logo" className="w-14 h-14" height={56} width={56} />
+        <img
+          src="/boniche-gang-logo.png"
+          alt="Boniche Gang Logo"
+          className="w-14 h-14"
+          height={56}
+          width={56}
+        />
         <h1 className="text-2xl font-bold">Boniche Gang</h1>
         <nav className="ml-5">
           <ul className="flex space-x-4">
@@ -69,12 +86,12 @@ export default async function Header() {
       </div>
       <div className="flex space-x-4 items-center">
         <Link href="/report">
-          <FaBug className='mr-2' />
+          <FaBug className="mr-2" />
           Report a bug
         </Link>
 
         <>
-          {user ? (
+          {user_id ? (
             <>
               {/* @ts-expect-error Async Server Component */}
               <AvatarPreview />

@@ -16,15 +16,6 @@ interface Props {
     id: string;
     updated_at: string | null;
     username: string | null;
-    user:
-      | {
-          email: string | null;
-        }
-      |
-        {
-          email: string | null;
-        }[]
-      | null;
   };
   countries: {
     id: number;
@@ -36,7 +27,7 @@ export default function ProfileForm({ profile, countries }: Props) {
   const { supabase, user } = useSupabase();
 
   const [username, setUsername] = useState<string | null>(profile.username);
-  const [email, setEmail] = useState<string | null>((profile.user as {email: string}).email);
+  const [email, setEmail] = useState<string | null>(user?.email!);
   const [fullName, setFullName] = useState<string | null>(profile.full_name);
   const [country, setCountry] = useState<number | null>(profile.country);
   const [biography, setBiography] = useState<string | null>(profile.biography);

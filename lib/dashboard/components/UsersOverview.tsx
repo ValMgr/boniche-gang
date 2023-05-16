@@ -3,29 +3,28 @@
 import { DonutChart, Title, Card } from '@tremor/react';
 
 interface Props {
-  users: {
-    email: string | null;
+  roles: {
     role: string | null;
   }[];
 }
 
-export default function UsersOverview({ users }: Props) {
+export default function UsersOverview({ roles }: Props) {
   const data = [
     {
       label: 'Admin',
-      value: users.filter((user) => user.role === 'admin').length
+      value: roles.filter((role) => role.role === 'admin').length
     },
     {
       label: 'Members',
-      value: users.filter((user) => user.role === 'member').length
+      value: roles.filter((role) => role.role === 'member').length
     },
     {
       label: 'Guests',
-      value: users.filter((user) => user.role === 'authenticated').length
+      value: roles.filter((role) => role.role === 'guest').length
     }
   ];
 
-  if (users.length === 0) {
+  if (roles.length === 0) {
     return (
       <Card>
         <Title> Users </Title>
@@ -42,6 +41,7 @@ export default function UsersOverview({ users }: Props) {
         index="label"
         category="value"
         showLabel={true}
+        colors={['amber', 'green', 'indigo']}
       />
     </Card>
   );

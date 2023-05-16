@@ -11,9 +11,9 @@ export default async function Overview() {
     cookies
   });
 
-  const { data: users, error } = await supabase
-    .from('users')
-    .select('email, role');
+  const { data: roles, error } = await supabase
+    .from('roles')
+    .select('role');
 
   if (error) {
     console.error(error);
@@ -21,7 +21,7 @@ export default async function Overview() {
 
   return (
     <Grid className="mt-4 gap-5 w-full" numCols={1} numColsMd={2} numColsLg={2}>
-      {users && <UsersOverview users={users} />}
+      {roles && <UsersOverview roles={roles} />}
 
       <Card>
         <Title> Events </Title>

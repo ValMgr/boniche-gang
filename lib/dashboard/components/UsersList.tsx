@@ -27,7 +27,7 @@ export default function UsersList({ profiles }: Props) {
   const [success, setSuccess] = useState<string | null>(null);
   const roles = profiles.map((profile) => ({
     id: profile.id,
-    role: (profile.user as User).role
+    role: profile.permissions.role
   }));
 
   const handleSave = useCallback(async () => {
@@ -46,21 +46,35 @@ export default function UsersList({ profiles }: Props) {
     });
 
     if (rolesToUpdate.length === 0) {
+      setError('No changes to save');
       return;
     }
 
-    rolesToUpdate.map(async (role) => {
-      const { error } = await supabase.rpc('update_user_role', {
-        user_id: role.id,
-        new_role: role.role
-      });
+    const updates = rolesToUpdate.map(
+      async (role) =>
+        new Promise((resolve, reject) => {
+          console.log(role.id, role.role);
+          supabase
+            .from('roles')
+            .update({ role: role.role })
+            .eq('id', role.id)
+            .then(({ error }) => {
+              if (error) {
+                reject(error);
+                return;
+              }
 
-      if (error) {
-        setError(error.message);
-      }
-    });
+              resolve(true);
+            });
+        })
+    );
 
-    if(!error) setSuccess('Roles updated successfully');
+    try {
+      await Promise.all(updates);
+      setSuccess('Roles updated successfully');
+    } catch (error) {
+      setError((error as Error).message);
+    }
   }, [roles]);
 
   return (
@@ -83,7 +97,6 @@ export default function UsersList({ profiles }: Props) {
               <TableHeaderCell>Fullname</TableHeaderCell>
               <TableHeaderCell>Email</TableHeaderCell>
               <TableHeaderCell>Role</TableHeaderCell>
-              <TableHeaderCell>Updated at</TableHeaderCell>
               <TableHeaderCell>Created at</TableHeaderCell>
             </TableRow>
           </TableHead>
@@ -97,16 +110,13 @@ export default function UsersList({ profiles }: Props) {
                   <select
                     name={`roles_${index}`}
                     id={`roles_${index}`}
-                    disabled={(profile.user as User).role === 'admin'}
-                    defaultValue={(profile.user as User).role}
+                    disabled={profile.permissions.role === 'admin'}
+                    defaultValue={profile.permissions.role}
                   >
                     <option value="admin">Admin</option>
                     <option value="member">Member</option>
-                    <option value="authenticated">Authenticated</option>
+                    <option value="guest">Guest</option>
                   </select>
-                </TableCell>
-                <TableCell>
-                  {new Date(profile.updated_at as string).toDateString()}
                 </TableCell>
                 <TableCell>
                   {new Date(

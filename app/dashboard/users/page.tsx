@@ -2,8 +2,9 @@ import { headers, cookies } from 'next/headers';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { Database } from '@/types/database.types';
-import Button from '@/core/components/Button';
 import UsersList from '@/dashboard/components/UsersList';
+
+const revalidate = 0;
 
 export default async function Users() {
   const supabase = createServerComponentSupabaseClient<Database>({
@@ -13,7 +14,7 @@ export default async function Users() {
 
   const { data: profiles, error: profile_err } = await supabase
     .from('profiles')
-    .select('*, user:users(*)');
+    .select('*, permissions:roles(role), user:users(email, created_at)');
 
   if (profile_err) {
     console.error(profile_err);
