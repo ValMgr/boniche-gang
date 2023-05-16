@@ -5,11 +5,13 @@ import { useState } from 'react';
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
 import Link from '@/core/components/Link';
 import Button from '@/core/components/Button';
+import Error from '@/core/components/Error';
+import Success from '@/core/components/Success';
 
 export default function RegisterForm() {
   const { supabase } = useSupabase();
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,7 +37,9 @@ export default function RegisterForm() {
       return;
     }
 
-    setSuccess(true);
+    setSuccess(
+      'You have been registered successfully. Please check your email to verify your account.'
+    );
   };
 
   return (
@@ -113,17 +117,8 @@ export default function RegisterForm() {
 
         <Link href="/login">Already have an account?</Link>
       </div>
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4">
-          You have been registered successfully. Please check your email to
-          verify your account.
-        </div>
-      )}
+      {error && <Error error={error} />}
+      {success && <Success success={success} />}
     </form>
   );
 }

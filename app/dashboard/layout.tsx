@@ -24,8 +24,8 @@ export default async function DashboardLayout({ children }: Props) {
       condition: true
     },
     {
-      href: '/dashboard/events',
-      label: 'Events',
+      href: '/dashboard/servers',
+      label: 'Servers',
       condition: true
     },
     {
@@ -34,13 +34,13 @@ export default async function DashboardLayout({ children }: Props) {
       condition: session?.user.role === 'admin'
     },
     {
-      href: '/dashboard/products',
-      label: 'Products',
+      href: '/dashboard/events',
+      label: 'Events',
       condition: true
     },
     {
-      href: '/dashboard/servers',
-      label: 'Servers',
+      href: '/dashboard/products',
+      label: 'Products',
       condition: true
     },
     {

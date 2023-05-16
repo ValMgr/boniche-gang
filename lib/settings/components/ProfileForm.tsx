@@ -1,31 +1,55 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
 import AvatarInput from '@/settings/components/AvatarInput';
+import Error from '@/core/components/Error';
+import Success from '@/core/components/Success';
 
-export default function ProfileForm() {
+interface Props {
+  profile: {
+    avatar_url: string | null;
+    biography: string | null;
+    country: number | null;
+    full_name: string | null;
+    id: string;
+    updated_at: string | null;
+    username: string | null;
+    user:
+      | {
+          email: string | null;
+        }
+      |
+        {
+          email: string | null;
+        }[]
+      | null;
+  };
+  countries: {
+    id: number;
+    name: string | null;
+  }[];
+}
+
+export default function ProfileForm({ profile, countries }: Props) {
   const { supabase, user } = useSupabase();
 
-  const [username, setUsername] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
-  const [fullName, setFullName] = useState<string | null>(null);
-  const [country, setCountry] = useState<number>(-1);
-  const [biography, setBiography] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(profile.username);
+  const [email, setEmail] = useState<string | null>((profile.user as {email: string}).email);
+  const [fullName, setFullName] = useState<string | null>(profile.full_name);
+  const [country, setCountry] = useState<number | null>(profile.country);
+  const [biography, setBiography] = useState<string | null>(profile.biography);
 
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const [countryList, setCountryList] = useState<
-    { id: number; name: string | null }[]
-  >([]);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const editProfile = useCallback(
     async (event: React.FormEvent) => {
       event.preventDefault();
-      console.log('update profile');
+
+      setError(null);
+      setSuccess(null);
 
       const { error } = await supabase
         .from('profiles')
@@ -43,66 +67,16 @@ export default function ProfileForm() {
         return;
       }
 
-      setSuccess(true);
+      setSuccess('Profile updated successfully!');
     },
     [username, email, fullName, country, biography, setError, setSuccess]
   );
 
-  useEffect(() => {
-    (async () => {
-      if (user === null || !loading) {
-        return;
-      }
-
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (error || !profile) {
-        console.error(error);
-        return;
-      }
-
-      setEmail(user.email!);
-      setUsername(profile.username);
-      setFullName(profile.full_name);
-      setCountry(profile.country!);
-      setBiography(profile.biography);
-      setLoading(false);
-    })();
-
-    (async () => {
-      if (countryList.length !== 0) return;
-
-      const { data: countries, error } = await supabase
-        .from('countries')
-        .select('id,name')
-        .order('name', { ascending: true });
-
-      if (error || !countries) {
-        console.error(error);
-        return;
-      }
-
-      setCountryList(countries);
-    })();
-  }, [supabase, user]);
-
   return (
     <>
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-          {error}
-        </div>
-      )}
+      {error && <Error error={error} />}
 
-      {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
-          Profile updated successfully!
-        </div>
-      )}
+      {success && <Success success={success} />}
 
       <form
         className="flex flex-col gap-4 w-full"
@@ -176,7 +150,7 @@ export default function ProfileForm() {
             Avatar
           </label>
 
-          <AvatarInput />
+          <AvatarInput avatar_url={profile.avatar_url} />
         </div>
 
         <hr />
@@ -210,9 +184,9 @@ export default function ProfileForm() {
             name="country"
             required
             onChange={(event) => setCountry(parseInt(event.target.value))}
-            value={country}
+            value={country || 0}
           >
-            {countryList.map((item) => (
+            {countries.map((item) => (
               <option key={item.name} value={item.id}>
                 {item.name}
               </option>

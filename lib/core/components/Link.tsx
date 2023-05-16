@@ -1,4 +1,7 @@
+'use client';
+
 import { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
@@ -6,7 +9,6 @@ interface Props {
   target?: string;
   style?: 'primary' | 'secondary';
   role?: string;
-
   disabled?: boolean;
 }
 
@@ -16,9 +18,9 @@ export default function Link({
   target,
   style = 'primary',
   role = 'link',
-
   disabled = false
 }: Props) {
+  const pathname = usePathname();
   if (style === 'secondary') {
     return (
       <a
@@ -27,7 +29,7 @@ export default function Link({
         role={role}
         className={`text-zinc-100 hover:text-zinc-300 flex items-center ${
           disabled && 'pointer-events-none opacity-50'
-        }`}
+        } ${href === pathname && 'underline'}`}
         aria-disabled={disabled}
       >
         {children}
@@ -42,7 +44,7 @@ export default function Link({
       role={role}
       className={`text-zinc-900 hover:text-zinc-700 flex items-center ${
         disabled && 'pointer-events-none opacity-50'
-      }`}
+      } ${href === pathname && 'underline'}`}
       aria-disabled={disabled}
     >
       {children}

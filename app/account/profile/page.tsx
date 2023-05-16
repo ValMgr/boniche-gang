@@ -1,8 +1,38 @@
+import { headers, cookies } from 'next/headers';
+import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+
+import { Database } from '@/types/database.types';
 import Button from '@/core/components/Button';
 import Avatar from '@/settings/components/Avatar';
 import ProfileForm from '@/settings/components/ProfileForm';
 
-export default function Profile() {
+export default async function Profile() {
+  const supabase = createServerComponentSupabaseClient<Database>({
+    headers,
+    cookies
+  });
+
+  const user_id = (await supabase.auth.getUser()).data.user?.id;
+
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('*, user:users(email)')
+    .eq('id', user_id)
+    .single();
+
+  const { data: countries, error: err } = await supabase
+    .from('countries')
+    .select('id,name')
+    .order('name', { ascending: true });
+
+  if (error || err) {
+    console.error(error);
+  }
+
+  if (!profile || !countries) {
+    return <div>An error occurred while fetching your profile</div>;
+  }
+  
   return (
     <>
       <div
@@ -27,7 +57,7 @@ export default function Profile() {
         </Button>
       </div>
 
-      <ProfileForm />
+      <ProfileForm profile={profile} countries={countries} />
     </>
   );
 }

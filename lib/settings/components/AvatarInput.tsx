@@ -1,14 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Button from '@/core/components/Button';
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
 
-export default function AvatarInput() {
+interface Props {
+  avatar_url: string | null;
+}
+
+export default function AvatarInput({ avatar_url }: Props) {
   const { supabase, user } = useSupabase();
   const [avatar, setAvatar] = useState<File | null>(null);
-  const [currentAvatar, setCurrentAvatar] = useState<string>('');
+  const [currentAvatar, setCurrentAvatar] = useState<string>(avatar_url || '');
 
   const deleteAvatar = useCallback(async () => {
     if (!currentAvatar) return;
@@ -44,25 +48,6 @@ export default function AvatarInput() {
     }
 
   }, [avatar, currentAvatar]);
-
-  useEffect(() => {
-    (async () => {
-      if (user === null) return;
-
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('avatar_url')
-        .eq('id', user.id)
-        .single();
-
-      if (error || !profile) {
-        console.error(error);
-        return;
-      }
-
-      setCurrentAvatar(profile.avatar_url!);
-    })();
-  }, [user]);
 
   return (
     <div className="flex flex-row justify-between w-full">

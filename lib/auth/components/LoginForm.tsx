@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
 import Button from '@/core/components/Button';
 import Link from '@/core/components/Link';
+import Error from '@/core/components/Error';
 
 export default function LoginForm() {
   const { supabase } = useSupabase();
@@ -79,11 +80,7 @@ export default function LoginForm() {
         </Button>
         <Link href="/register">Create an account?</Link>
       </div>
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">
-          {error}
-        </div>
-      )}
+      {error && <Error error={error} />}
     </form>
   );
 }

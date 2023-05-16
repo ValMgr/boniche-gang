@@ -98,7 +98,6 @@ export interface Database {
           email: string | null;
           id: string | null;
           last_sign_in_at: string | null;
-          phone: string | null;
           role: string | null;
           updated_at: string | null;
         };
@@ -107,7 +106,6 @@ export interface Database {
           email?: string | null;
           id?: string | null;
           last_sign_in_at?: string | null;
-          phone?: string | null;
           role?: string | null;
           updated_at?: string | null;
         };
@@ -116,14 +114,19 @@ export interface Database {
           email?: string | null;
           id?: string | null;
           last_sign_in_at?: string | null;
-          phone?: string | null;
           role?: string | null;
           updated_at?: string | null;
         };
       };
     };
     Functions: {
-      [_ in never]: never;
+      update_user_role: {
+        Args: {
+          user_id: string;
+          new_role: string;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       continents:
