@@ -41,11 +41,11 @@ export default async function MembersPage() {
             className="flex flex-col rounded-lg shadow border border-gray-200"
           >
             {profile.avatar_url ? (
-              <img src={profile.avatar_url!} className="rounded-t-lg" />
+              <img src={profile.avatar_url!} className="rounded-t-lg flex-1 object-fill" />
             ) : (
               <div className="relative w-full flex-1 bg-gray-200 rounded-t-lg overflow-hidden">
                 <svg
-                  className="absolute w-26 h-26 text-gray-400 -left-2 top-10"
+                  className="absolute w-24 h-24 text-gray-400 -left-2 top-10"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -60,11 +60,11 @@ export default async function MembersPage() {
             )}
             <div className="flex flex-col p-5">
               <span className="font-bold">{profile.username}</span>
-              {profile.country && (
+
                 <span className="text-sm text-gray-500">
-                  {(profile.country as { name: string }).name}
+                  {profile.country ? (profile.country as { name: string }).name : 'Unknown location'}
                 </span>
-              )}
+
             </div>
           </div>
         ))}
