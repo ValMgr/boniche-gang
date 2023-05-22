@@ -17,7 +17,6 @@ export default async function Header() {
   });
 
   const user_id = (await supabase.auth.getUser()).data.user?.id;
-  if (!user_id) return null;
 
   const { data: permissions, error } = await supabase
     .from('roles')
