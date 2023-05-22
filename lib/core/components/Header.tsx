@@ -18,12 +18,12 @@ export default async function Header() {
 
   const user_id = (await supabase.auth.getUser()).data.user?.id;
 
-  const { data: permissions, error } = await supabase
-    .from('roles')
-    .select('role')
-    .eq('id', user_id)
-    .single();
-
+  const { data: permissions, error } = user_id ? await supabase
+  .from('roles')
+  .select('role')
+  .eq('id', user_id)
+  .single() : { data: null, error: null };
+  
   if (error) {
     console.error(error);
   }
