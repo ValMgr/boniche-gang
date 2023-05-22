@@ -17,8 +17,8 @@ export default function EventsList({ events }: Props) {
           <TableRow>
             <TableHeaderCell>ID</TableHeaderCell>
             <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Start</TableHeaderCell>
-            <TableHeaderCell>End</TableHeaderCell>
+            <TableHeaderCell>Start Date</TableHeaderCell>
+            <TableHeaderCell>End Date</TableHeaderCell>
             <TableHeaderCell>Details</TableHeaderCell>
           </TableRow>
         </TableHead>
