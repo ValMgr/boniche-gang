@@ -6,13 +6,16 @@ import Button from '@/core/components/Button';
 import Avatar from '@/settings/components/Avatar';
 import ProfileForm from '@/settings/components/ProfileForm';
 
+const revalidate = 0;
+
 export default async function Profile() {
   const supabase = createServerComponentSupabaseClient<Database>({
     headers,
     cookies
   });
 
-  const user_id = (await supabase.auth.getUser()).data.user?.id;
+  const user = (await supabase.auth.getUser()).data.user;
+  const user_id = user?.id;
 
   const { data: profile, error } = await supabase
     .from('profiles')
@@ -32,7 +35,7 @@ export default async function Profile() {
   if (!profile || !countries) {
     return <div>An error occurred while fetching your profile</div>;
   }
-  
+
   return (
     <>
       <div
@@ -57,7 +60,7 @@ export default async function Profile() {
         </Button>
       </div>
 
-      <ProfileForm profile={profile} countries={countries} />
+      <ProfileForm user={user} profile={profile} countries={countries} />
     </>
   );
 }

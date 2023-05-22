@@ -1,5 +1,6 @@
 'use client';
 
+import { User } from '@supabase/auth-helpers-nextjs';
 import { useCallback, useState } from 'react';
 
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
@@ -8,6 +9,7 @@ import Error from '@/core/components/Error';
 import Success from '@/core/components/Success';
 
 interface Props {
+  user: User | null;
   profile: {
     avatar_url: string | null;
     biography: string | null;
@@ -23,8 +25,8 @@ interface Props {
   }[];
 }
 
-export default function ProfileForm({ profile, countries }: Props) {
-  const { supabase, user } = useSupabase();
+export default function ProfileForm({ user, profile, countries }: Props) {
+  const { supabase } = useSupabase();
 
   const [username, setUsername] = useState<string | null>(profile.username);
   const [email, setEmail] = useState<string | null>(user?.email!);
@@ -141,7 +143,7 @@ export default function ProfileForm({ profile, countries }: Props) {
             Avatar
           </label>
 
-          <AvatarInput avatar_url={profile.avatar_url} />
+          <AvatarInput avatar_url={profile.avatar_url} setError={setError} setSuccess={setSuccess} />
         </div>
 
         <hr />
