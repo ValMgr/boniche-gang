@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+
 import SupabaseProvider from '@/auth/provider/SupabaseProvider';
 import Header from '@/core/components/Header';
 
@@ -30,6 +32,7 @@ export default async function RootLayout({
             {children}
           </main>
         </SupabaseProvider>
+        <Analytics />
       </body>
     </html>
   );
