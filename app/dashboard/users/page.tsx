@@ -12,6 +12,7 @@ export default async function Users() {
     cookies
   });
 
+
   const { data: profiles, error: profile_err } = await supabase
     .from('profiles')
     .select('*, permissions:roles(role), user:users(email, created_at)');

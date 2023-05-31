@@ -22,8 +22,6 @@ export default async function Events() {
     );
   }
 
-  console.log(events[0].start_date, new Date(events[0].start_date).getDate());
-
   return (
     <div className="flex flex-col h-full">
       <h1 className="text-2xl font-bold">Our Events</h1>

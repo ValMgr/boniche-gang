@@ -7,18 +7,23 @@ import Link from '@/core/components/Link';
 
 interface Props {
   children: React.ReactNode;
+  params: any;
 }
 
-export default async function DashboardLayout({ children }: Props) {
+export default async function DashboardLayout({ children, params }: Props) {
   const supabase = createServerComponentSupabaseClient<Database>({
     headers,
     cookies
   });
-
+  
   const session = (await supabase.auth.getSession()).data.session;
   const user_id = session?.user?.id;
-  const { data: permissions } = await supabase.from('roles').select('role').eq('id', user_id).single();
-
+  const { data: permissions } = await supabase
+  .from('roles')
+  .select('role')
+  .eq('id', user_id)
+  .single();
+  
   if (!session || !permissions) {
     return <Login />;
   }
@@ -55,7 +60,6 @@ export default async function DashboardLayout({ children }: Props) {
       condition: permissions.role === 'admin'
     }
   ];
-
 
   return (
     <>

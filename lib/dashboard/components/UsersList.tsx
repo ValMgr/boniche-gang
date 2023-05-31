@@ -53,7 +53,6 @@ export default function UsersList({ profiles }: Props) {
     const updates = rolesToUpdate.map(
       async (role) =>
         new Promise((resolve, reject) => {
-          console.log(role.id, role.role);
           supabase
             .from('roles')
             .update({ role: role.role })
