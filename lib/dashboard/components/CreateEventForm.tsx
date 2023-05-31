@@ -1,17 +1,25 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { DateRangePicker, DateRangePickerValue } from '@tremor/react';
+import { DateRangePicker, DateRangePickerValue, SelectBox, SelectBoxItem } from '@tremor/react';
 import { useRouter } from 'next/navigation';
 
 import Button from '@/core/components/Button';
 import { useSupabase } from '@/auth/provider/SupabaseProvider';
 import Error from '@/core/components/Error';
 
-export default function CreateEventForm() {
+interface Props {
+  categories: {
+    id: string;
+    name: string | null;
+  }[] | null;
+}
+
+export default function CreateEventForm({ categories }: Props) {
   const { supabase } = useSupabase();
   const router = useRouter();
 
+  const [category, setCategory] = useState<string | null>(null);
   const [value, setValue] = useState<DateRangePickerValue>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,14 +34,20 @@ export default function CreateEventForm() {
     const start_date = value[0] as Date;
     const end_date = value[1] as Date;
     const thumbnail = formData.get('thumbnail') as File;
+    const cover = formData.get('cover') as File;
 
     const thumb_path_ext = thumbnail.name.split('.').pop();
     const thumb_path = `events/${name.replace(/\s/g, '_')}.${thumb_path_ext}`;
 
     const { data: uploaded_thumb, error: storage_error} = await supabase.storage.from('thumbnails').upload(thumb_path, thumbnail);
 
-    if (storage_error) {
-      setError(storage_error.message);
+    const cover_path_ext = cover.name.split('.').pop();
+    const cover_path = `events/${name.replace(/\s/g, '_')}.${cover_path_ext}`;
+
+    const { data: uploaded_cover, error: storage_error_2 } = await supabase.storage.from('covers').upload(cover_path, cover);
+
+    if (storage_error || storage_error_2) {
+      setError(storage_error?.message ?? storage_error_2?.message ?? 'Unknown error');
       return;
     }
 
@@ -43,7 +57,9 @@ export default function CreateEventForm() {
       start_date: start_date.toISOString(),
       end_date: end_date.toISOString(),
       thumbnail: supabase.storage.from('thumbnails').getPublicUrl(uploaded_thumb.path).data.publicUrl,
-      location
+      cover: supabase.storage.from('covers').getPublicUrl(uploaded_cover.path).data.publicUrl,
+      location,
+      category,
     });
 
     if (error) {
@@ -102,6 +118,19 @@ export default function CreateEventForm() {
       </div>
       <div className="mb-4">
         <label
+          htmlFor="category"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Category
+        </label>
+        <SelectBox className="font-normal" onValueChange={setCategory} >
+          {categories!.map((category) => (
+            <SelectBoxItem text={category.name!} value={category.id} />
+          ))}
+        </SelectBox>
+      </div>
+      <div className="mb-4">
+        <label
           htmlFor="location"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
@@ -117,10 +146,10 @@ export default function CreateEventForm() {
       </div>
       <div className="mb-4">
         <label
-          htmlFor="image"
+          htmlFor="thumbnail"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Image
+          Thumbnail
         </label>
         <input
           className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10
@@ -130,6 +159,24 @@ export default function CreateEventForm() {
           aria-describedby="file_input_help"
           id="file_input"
           name="thumbnail"
+          type="file"
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="cover"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Cover
+        </label>
+        <input
+          className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10
+          file:bg-transparent file:border-0
+          file:bg-gray-200 file:mr-4
+          file:py-3 file:px-4"
+          aria-describedby="file_input_help"
+          id="file_input"
+          name="cover"
           type="file"
         />
       </div>

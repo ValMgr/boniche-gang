@@ -4,6 +4,7 @@ import { Card, Grid, Title } from '@tremor/react';
 
 import { Database } from '@/types/database.types';
 import UsersOverview from '@/dashboard/components/UsersOverview';
+import EventsOverview from '@/dashboard/components/EventsOverview';
 
 export default async function Overview() {
   const supabase = createServerComponentSupabaseClient<Database>({
@@ -11,21 +12,21 @@ export default async function Overview() {
     cookies
   });
 
-  const { data: roles, error } = await supabase
+  const { data: roles, error: roles_error } = await supabase
     .from('roles')
     .select('role');
 
-  if (error) {
-    console.error(error);
+  const { data: events, error: events_error } = await supabase.from('events').select('category(name)')
+
+  if (roles_error || events_error) {
+    console.error(roles_error || events_error);
   }
 
   return (
     <Grid className="mt-4 gap-5 w-full" numCols={1} numColsMd={2} numColsLg={2}>
       {roles && <UsersOverview roles={roles} />}
 
-      <Card>
-        <Title> Events </Title>
-      </Card>
+      {events && <EventsOverview events={(events as { category: {name: string} | null }[])} />}
 
       <Card>
         <Title> Products </Title>

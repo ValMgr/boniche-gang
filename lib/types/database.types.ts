@@ -35,11 +35,27 @@ export interface Database {
           name?: string | null;
         };
       };
+      event_category: {
+        Row: {
+          id: string;
+          name: string | null;
+        };
+        Insert: {
+          id: string;
+          name?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string | null;
+        };
+      };
       events: {
         Row: {
+          category: string | null;
+          cover: string | null;
           created_at: string | null;
           description: string | null;
-          end_date: string | null;
+          end_date: string;
           id: number;
           location: string | null;
           name: string;
@@ -47,9 +63,11 @@ export interface Database {
           thumbnail: string | null;
         };
         Insert: {
+          category?: string | null;
+          cover?: string | null;
           created_at?: string | null;
           description?: string | null;
-          end_date?: string | null;
+          end_date: string;
           id?: number;
           location?: string | null;
           name: string;
@@ -57,9 +75,11 @@ export interface Database {
           thumbnail?: string | null;
         };
         Update: {
+          category?: string | null;
+          cover?: string | null;
           created_at?: string | null;
           description?: string | null;
-          end_date?: string | null;
+          end_date?: string;
           id?: number;
           location?: string | null;
           name?: string;
@@ -201,6 +221,13 @@ export type InsertCountries =
   Database['public']['Tables']['countries']['Insert'];
 export type UpdateCountries =
   Database['public']['Tables']['countries']['Update'];
+
+export type EventCategory =
+  Database['public']['Tables']['event_category']['Row'];
+export type InsertEventCategory =
+  Database['public']['Tables']['event_category']['Insert'];
+export type UpdateEventCategory =
+  Database['public']['Tables']['event_category']['Update'];
 
 export type Events = Database['public']['Tables']['events']['Row'];
 export type InsertEvents = Database['public']['Tables']['events']['Insert'];

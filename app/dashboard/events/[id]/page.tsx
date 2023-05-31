@@ -18,7 +18,7 @@ export default async function EventPage({ params }: Props) {
 
   const { data: event, error } = await supabase
     .from('events')
-    .select('*')
+    .select('*, category(name)')
     .eq('id', params.id)
     .single();
 
@@ -50,7 +50,8 @@ export default async function EventPage({ params }: Props) {
         </div>
       </div>
       <hr className="my-8" />
-      <h2 className="text-xl mb-2 font-medium tracking-tight">{event.name}</h2>
+      <h2 className="text-xl mb-1 font-medium tracking-tight">{event.name}</h2>
+      <p className='text-sm mb-4 italic'>{(event.category as {name: string}).name}</p>
 
       <div className="w-full flex flew-row gap-2">
 
