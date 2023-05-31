@@ -53,7 +53,7 @@ export default async function Header() {
       href: '/dashboard/overview',
       label: 'Dashboard',
       condition:
-        (permissions && permissions.role?.toLowerCase() === 'members') ||
+        (permissions && permissions.role?.toLowerCase() === 'member') ||
         permissions?.role?.toLowerCase() === 'admin'
     }
   ];
